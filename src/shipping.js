@@ -2,7 +2,7 @@ function notifyShipping() {
   
   var properties = PropertiesService.getScriptProperties().getProperties();
   var query = properties.SEARCH_QUERY;
-  var amazon = /ship-confirm@amazon.co.jp/;
+  var amazon = /amazon.co.jp/;
   
   var threads = GmailApp.search(query);
   
