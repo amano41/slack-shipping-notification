@@ -2,7 +2,6 @@ function main() {
 
   var properties = PropertiesService.getScriptProperties().getProperties();
   var query = properties.SEARCH_QUERY;
-  var amazon = /amazon.co.jp/;
 
   var threads = GmailApp.search(query);
 
@@ -26,8 +25,8 @@ function main() {
       var subject = message.getSubject();
       var body = message.getPlainBody();
 
-      // Amazon.co.jp からの配送
-      if (from.match(amazon)) {
+      // Amazon.co.jp
+      if (from.match(/amazon.co.jp/) && subject.match(/発送/)) {
         postAmazonNotification(subject, body);
         message.markRead(); // 既読
         message.refresh();  // 既読を反映
