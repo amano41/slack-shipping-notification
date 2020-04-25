@@ -27,9 +27,15 @@ function main() {
 
       // Amazon.co.jp
       if (from.match(/amazon.co.jp/) && subject.match(/発送/)) {
-        postAmazonNotification(subject, body);
-        message.markRead(); // 既読
-        message.refresh();  // 既読を反映
+        amazon.postNotification(subject, body);
+        markRead(message);
+        continue;
+      }
+
+      // Yodobashi.com
+      if (from.match(/yodobashi.com/) && subject.match(/出荷/)) {
+        yodobashi.postNotification(subject, body);
+        markRead(message);
         continue;
       }
 
@@ -46,6 +52,21 @@ function main() {
 
   }
 
+}
+
+
+function markRead(message) {
+  message.markRead(); // 既読
+  message.refresh();  // 既読を反映
+}
+
+
+function parseMessage(message, regexp, defaultValue = "---", formatter = results => results[1]) {
+  var results = message.match(regexp);
+  if (results == null) {
+    return defaultValue;
+  }
+  return formatter(results);
 }
 
 

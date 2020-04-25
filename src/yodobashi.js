@@ -1,4 +1,4 @@
-const amazon = {
+const yodobashi = {
 
   postNotification: function(subject, body) {
 
@@ -13,32 +13,31 @@ const amazon = {
   },
 
   getOrderNumber: function(message) {
-    var regexp = /注文番号 ([-0-9]+)/;
+    var regexp = /【ご注文番号】 ([-0-9]+)/;
     return parseMessage(message, regexp);
   },
 
   getTrackingURL: function(message) {
-    var regexp = /配送状況は.+\s+(https:\/\/.+)\s+/;
-    return parseMessage(message, regexp, "http://www.amazon.co.jp");
+    var regexp = /(https?:\/\/.+)/;
+    return parseMessage(message, regexp, "https://www.yodobashi.com");
   },
 
   getDeliveryDate: function(message) {
-    var regexp = /お届け予定： (.)曜日, ([0-1][0-9]\/[0-3][0-9])/;
-    return parseMessage(message, regexp, "---", m => m[2] + "（" + m[1] + "）");
+    return "---";
   },
 
   getCarrier: function(message) {
-    var regexp = /お客様の商品は(.+)でお届けいたします。/;
+    var regexp = /今回の配達：(.+)/;
     return parseMessage(message, regexp);
   },
 
   getSlipNumber: function(message) {
-    var regexp = /お問い合わせ伝票番号は([A-Z0-9]+)です。/;
+    var regexp = /配達受付番号（伝票番号）：([0-9]+)/;
     return parseMessage(message, regexp);
   },
 
   getOrderDetail: function(message) {
-    var regexp = /購入明細書：\s+([\s\S]+合計：.+)/;
+    var regexp = /【今回出荷の商品】\s+-+\s+([^【]+円)\s+【/;
     return parseMessage(message, regexp);
   }
 }
