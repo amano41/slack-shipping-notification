@@ -62,26 +62,23 @@ function postNotification(notifications) {
 
 function createNotification(title, link, date, carrier, slipNumber, orderDetail) {
 
+  const field = (title, value, short) => {
+    return {
+      "title" : title,
+      "value" : value,
+      "short" : short
+    };
+  }
+
   return {
     "title" : title,
     "title_link" : link,
     "fields" : [
-      createField("配達予定日", date, false),
-      createField("配送業者", carrier, false),
-      createField("伝票番号", slipNumber, false),
-      createField("注文内容", orderDetail, false)
+      field("配達予定日", date, false),
+      field("配送業者", carrier, false),
+      field("伝票番号", slipNumber, false),
+      field("注文内容", orderDetail, false)
     ]
-  };
-
-}
-
-
-function createField(title, value, short) {
-
-  return {
-    "title" : title,
-    "value" : value,
-    "short" : short
   };
 
 }
