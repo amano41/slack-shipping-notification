@@ -1,5 +1,5 @@
 function postAmazonNotification(subject, body) {
-  
+
   var link = getTrackingURL(body);
   var date = getDeliveryDate(body);
   var carrier = getCarrier(body);
@@ -32,7 +32,7 @@ function getDeliveryDate(message) {
 
 
 function getTrackingURL(message) {
-  var regexp = /配送状況は.+\s+(.+)\s+お届け先/;
+  var regexp = /配送状況は.+\s+(https:\/\/.+)\s+/;
   var result = message.match(regexp);
   if (result == null) {
     return "http://www.amazon.co.jp";
@@ -52,7 +52,7 @@ function getCarrier(message) {
 
 
 function getSlipNumber(message) {
-  var regexp = /お問い合わせ伝票番号は([0-9]+)です。/;
+  var regexp = /お問い合わせ伝票番号は([A-Z0-9]+)です。/;
   var result = message.match(regexp);
   if (result == null) {
     return "---";
@@ -62,7 +62,7 @@ function getSlipNumber(message) {
 
 
 function getOrderDetail(message) {
-  var regexp = /発送の詳細：[\s]+(\S[\s\S]+合計：.+)/;
+  var regexp = /購入明細書：\s+([\s\S]+合計：.+)/;
   var result = message.match(regexp);
   if (result == null) {
     return "---";
