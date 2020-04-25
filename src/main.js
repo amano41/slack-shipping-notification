@@ -52,11 +52,14 @@ function main() {
 
 function postNotification(notifications) {
 
+  var properties = PropertiesService.getScriptProperties().getProperties();
+  var url = properties.WEBHOOK_URL;
+
   var channel = "#general";
   var username = "配達予定";
   var icon_emoji = ":package:";
 
-  postSlackMessage(channel, username, icon_emoji, "", notifications);
+  Slack.postMessage(url, channel, username, icon_emoji, "", notifications);
 }
 
 
